@@ -1,7 +1,12 @@
-import express from 'express';
+import express, { application } from 'express';
 import { json } from 'body-parser';
 
 const app = express();
 app.use(json());
+
+app.get('/api/users/currentuser', (req, res) => { 
+    res.send("hi there!!");
+});
+
 
 app.listen(3000, () => { console.log("Listening on port 3000!") })
