@@ -9,7 +9,9 @@ import { Request, Response, NextFunction } from "express";
 import { RequestValidationError } from '../errors/request-validation-error';
 import { DatabaseValidationError } from '../errors/database-validation-error';
 
+interface CustomError {
 
+}
 
 export const errorHandler = (
     err: Error, 
@@ -19,14 +21,11 @@ export const errorHandler = (
 ) => {
 
     if (err instanceof RequestValidationError) {
-        const formattedError = err.errors.map(error => {
-            return { message: error.msg, field: error.param }
-        })
-        res.status(400).send({ errors: formattedError });
+        res.status(err.statusCode).send({ errors: err.serializeError() });
     }
 
     if (err instanceof DatabaseValidationError) {
-        res.status(500).send({ errors: [{ message: err.reason }] });
+        res.status(err.statusCode).send({ errors: err.serializeError() });
     }
 
     res.status(400).send({
