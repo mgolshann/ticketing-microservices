@@ -9,9 +9,6 @@ import { Request, Response, NextFunction } from "express";
 import { RequestValidationError } from '../errors/request-validation-error';
 import { DatabaseValidationError } from '../errors/database-validation-error';
 
-interface CustomError {
-
-}
 
 export const errorHandler = (
     err: Error, 
