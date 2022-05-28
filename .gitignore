@@ -1,4 +1,6 @@
 /auth/node_modules
 /auth/package-lock.json
-
+/temp
 skaffold.yaml
+
+!.gitignore
