@@ -19,14 +19,17 @@ export const errorHandler = (
 ) => {
 
     if (err instanceof RequestValidationError) {
-        res.status(400).send('Error from incoming request 2 ...')
+        const formattedError = err.errors.map(error => {
+            return { message: error.msg, field: error.param }
+        })
+        res.status(400).send({ errors: formattedError });
     }
 
     if (err instanceof DatabaseValidationError) {
-        res.status(500).send('unable to connect to DB 2');
+        res.status(500).send({ errors: [{ message: err.reason }] });
     }
 
     res.status(400).send({
-        message: err.message
+        errors: [{ message: 'Something went wrong' }]
     })
 }
