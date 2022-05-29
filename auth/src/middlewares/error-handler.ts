@@ -6,9 +6,7 @@ import { Request, Response, NextFunction } from "express";
 // 3- handling multi errors for each scenario
 
 
-import { RequestValidationError } from '../errors/request-validation-error';
-import { DatabaseValidationError } from '../errors/database-validation-error';
-
+import { CustomError } from '../errors/custom-error';
 
 export const errorHandler = (
     err: Error, 
@@ -17,11 +15,7 @@ export const errorHandler = (
     next: NextFunction
 ) => {
 
-    if (err instanceof RequestValidationError) {
-        res.status(err.statusCode).send({ errors: err.serializeError() });
-    }
-
-    if (err instanceof DatabaseValidationError) {
+    if (err instanceof CustomError) {
         res.status(err.statusCode).send({ errors: err.serializeError() });
     }
 
