@@ -2,7 +2,7 @@ import express, { Request, Response} from 'express';
 import { body, validationResult } from 'express-validator';
 
 import { RequestValidationError } from '../errors/request-validation-error';
-import { DatabaseValidationError } from '../errors/database-validation-error';
+import { BadRequestError } from '../errors/bad-request-error';
 
 import { User } from '../models/user';
 
@@ -33,8 +33,7 @@ router.post('/api/users/signup',
     // Looking for user to check if user exist or not
     const existingUser = await User.findOne({ email });
     if (existingUser) {
-        console.log('Email in use !!');
-        return res.send({ message: 'Email in use !!'});
+        throw new BadRequestError('Email in use !!!');
     }
 
     // Adding new user
@@ -44,7 +43,7 @@ router.post('/api/users/signup',
     } catch (err) {
         console.log(err);
         return res.status(201).send({ message: err })
-    }
+    }   
     
     // Sending successfull message to the front-end 
     res.status(201).send({ message: 'User successfully added' });
