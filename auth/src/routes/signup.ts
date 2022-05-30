@@ -4,7 +4,7 @@ import { body, validationResult } from 'express-validator';
 import { RequestValidationError } from '../errors/request-validation-error';
 import { DatabaseValidationError } from '../errors/database-validation-error';
 
-import { User, buildUser } from '../models/user';
+import { User } from '../models/user';
 
 
 const router = express.Router();
@@ -38,15 +38,16 @@ router.post('/api/users/signup',
     }
 
     // Adding new user
-    const user = buildUser({ email, password });
+    const user = User.build({ email, password });
     try {
         await user.save();
     } catch (err) {
+        console.log(err);
         return res.status(201).send({ message: err })
     }
     
     // Sending successfull message to the front-end 
-    res.status(201).send({ message: 'User successfully added'});
+    res.status(201).send({ message: 'User successfully added' });
 });
 
 export { router as SignupRouter };

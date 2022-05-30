@@ -7,6 +7,19 @@ interface userAttr {
     password: string;
 }
 
+// An interface that describe the properties
+// that a User Model has
+interface UserModel extends mongoose.Model<UserDoc> {
+    build(attrs: userAttr): UserDoc;
+}
+
+// An interface that describe the properties
+// that a user Document has
+interface UserDoc extends mongoose.Document {
+    email: string;
+    password: string;
+}
+
 const userSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -18,14 +31,14 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-const User = mongoose.model('User', userSchema);
-
-
 // Every time we want to creat a user
-// we must to call buildUser function 
+// we must to call User.build() function 
 // if we use "new User" typescript cannot do type checking  
-const buildUser = (userAttr: userAttr) => {
+userSchema.statics.build = (userAttr: userAttr) => {
     return new User(userAttr);
 }
 
-export { User, buildUser }
+const User = mongoose.model<UserDoc, UserModel>('User', userSchema);
+
+export { User }
+
