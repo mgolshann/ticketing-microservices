@@ -4,6 +4,9 @@ import { body, validationResult } from 'express-validator';
 import { RequestValidationError } from '../errors/request-validation-error';
 import { DatabaseValidationError } from '../errors/database-validation-error';
 
+import { User, buildUser } from '../models/user';
+
+
 const router = express.Router();
 
 router.post('/api/users/signup', 
@@ -24,9 +27,26 @@ router.post('/api/users/signup',
         throw new RequestValidationError(errors.array());
     }
     
-    throw new DatabaseValidationError()
+    // Getting properties from body request
+    const { email, password } = req.body;
+
+    // Looking for user to check if user exist or not
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+        console.log('Email in use !!');
+        return res.send({ message: 'Email in use !!'});
+    }
+
+    // Adding new user
+    const user = buildUser({ email, password });
+    try {
+        await user.save();
+    } catch (err) {
+        return res.status(201).send({ message: err })
+    }
     
-    res.status(200).send({});
+    // Sending successfull message to the front-end 
+    res.status(201).send({ message: 'User successfully added'});
 });
 
 export { router as SignupRouter };

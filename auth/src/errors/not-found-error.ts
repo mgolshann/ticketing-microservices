@@ -8,7 +8,7 @@ export class NotFoundError extends CustomError {
 
         Object.setPrototypeOf(this, NotFoundError.prototype);
     }
-    
+
     serializeError() {
         return [{ message: 'Route Not Found'}]
     }
