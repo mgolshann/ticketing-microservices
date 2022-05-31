@@ -32,9 +32,10 @@ const userSchema = new mongoose.Schema({
     }
 });
 
+// Execute before a save document
 userSchema.pre('save', async function(done) {
     if (this.isModified('password')) {
-        const hashedPassword = Password.toHash(this.get('password'));
+        const hashedPassword = await Password.toHash(this.get('password'));
         this.set('password', hashedPassword);
     }
     done();
