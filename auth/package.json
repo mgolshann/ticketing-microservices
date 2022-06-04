@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "MONGODB_URL=localhost && ts-node-dev src/index.ts",
+    "dev": "ts-node-dev src/index.ts",
     "build": "rimraf ./dist && tsc",
     "start": "npm run build && node dist/index.js"
   },
@@ -13,6 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "cookie-session": "^2.0.0",
+    "dotenv": "^16.0.1",
     "express": "^4.18.1",
     "express-async-errors": "^3.1.1",
     "express-validator": "^6.14.1",

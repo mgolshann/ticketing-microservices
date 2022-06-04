@@ -15,13 +15,9 @@ spec:
       containers:
         - name: auth
           image: mgolshann/auth
-          env:
-            - name: JWT_TOKEN
-              valueFrom:
-                secretKeyRef:
-                  name: jwt-secret
-                  key: JWT_TOKEN
-
+          envFrom:
+            - configMapRef:
+                name: auth-config
 ---
 apiVersion: v1
 kind: Service

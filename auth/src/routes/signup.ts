@@ -37,6 +37,7 @@ router.post('/api/users/signup',
         throw new BadRequestError('Email in use !!!');
     }
 
+ 
     // Adding new user
     const user = User.build({ email, password });
     try {
