@@ -3,12 +3,16 @@ import 'express-async-errors';
 import { json } from 'body-parser';
 import cookieSession from 'cookie-session'
 const mongoose = require("mongoose");
+
 require('dotenv').config();
 
-import { currentUserRouter } from './routes/current-user';
-import { SignupRouter } from './routes/signup';
-import { errorHandler } from './middlewares/error-handler';
 import { NotFoundError } from './errors/not-found-error';
+
+import { errorHandler } from './middlewares/error-handler';
+
+import { SignupRouter } from './routes/signup';
+import { SigninRouter } from './routes/signin'
+import { currentUserRouter } from './routes/current-user';
 
 // Initiating express
 const app = express();
@@ -33,6 +37,8 @@ app.use(
 // User routes
 app.use(currentUserRouter);
 app.use(SignupRouter);
+app.use(SigninRouter);
+
 
 // Handling not found routes
 app.all('*', async (req, res) => {
