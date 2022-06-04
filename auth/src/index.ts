@@ -11,7 +11,8 @@ import { NotFoundError } from './errors/not-found-error';
 import { errorHandler } from './middlewares/error-handler';
 
 import { SignupRouter } from './routes/signup';
-import { SigninRouter } from './routes/signin'
+import { SigninRouter } from './routes/signin';
+import { SignoutRouter } from './routes/signout';
 import { currentUserRouter } from './routes/current-user';
 
 // Initiating express
@@ -38,7 +39,7 @@ app.use(
 app.use(currentUserRouter);
 app.use(SignupRouter);
 app.use(SigninRouter);
-
+app.use(SignoutRouter);
 
 // Handling not found routes
 app.all('*', async (req, res) => {
