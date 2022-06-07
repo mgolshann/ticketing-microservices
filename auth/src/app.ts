@@ -26,10 +26,13 @@ app.set('trust proxy', true);
 app.use(json());
 
 // Configuration Cookie Session
+// secure: only share cookie with https connection
+// supertest not making https instead it use connection
+// so we tell run jest only when it's not in test mode
 app.use(
     cookieSession({
         keys: ['mgbg'],
-        secure: true, 
+        secure: process.env.NODE_ENV !== 'test', 
         signed: true,
         // Cookie Options
         //maxAge: 24 * 60 * 60 * 1000 // 24 hours

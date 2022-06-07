@@ -3,13 +3,17 @@ const mongoose = require("mongoose");
 import { app } from '../app';
 
 let mongo: any;
+
 beforeAll(async () => {
-    mongo = new MongoMemoryServer();
+    
+    process.env.JWT_TOKEN = 'asdf';
+
+    mongo = await MongoMemoryServer.create();
     const mongoUri = await mongo.getUri();
 
     await mongoose.connect(mongoUri, {
         useNewUrlParser: true,
-        useUnifiedTopology: true     
+        useUnifiedTopology: true
     });
 });
 
