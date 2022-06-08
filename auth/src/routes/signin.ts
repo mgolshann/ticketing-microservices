@@ -46,7 +46,7 @@ router.post('/api/users/signin',
         const userJwtToken = jwt.sign(payload, jwtToken);
         
         // Store in a session object
-        req.body = {
+        req.session = {
             jwt: userJwtToken
         }
 
