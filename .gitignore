@@ -1,6 +1,10 @@
 /auth/node_modules
-/temp
 /auth/dist
 /auth/.env
+
+/client/node_modules
+/client/.next
+
+/temp
 skaffold.yaml
 !.gitignore
