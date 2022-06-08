@@ -1,11 +1,9 @@
 import request from 'supertest';
 import { app } from '../../app';
 
-const apiUri = '/api/users/signin';
-
 it('fails when a email that does not exist is supplied', async () => {
     return request(app)
-        .post(apiUri)
+        .post('/api/users/signin')
         .send({
             email: 'mgbg@gmail.com',
             password: '123456'
@@ -23,7 +21,7 @@ it('fails when an incorrect password is supplied', async () => {
         .expect(201)
 
     await request(app)
-        .post(apiUri)
+        .post('/api/users/signin')
         .send({
             email: 'mgbg@yahoo.com',
             password: '123456789'
@@ -41,7 +39,7 @@ it('responses with a cookie when given valid credentials', async () => {
         .expect(201)
 
     const response = await request(app)
-        .post(apiUri)
+        .post('/api/users/signin')
         .send({
             email: 'mgbg@yahoo.com',
             password: '123456'
