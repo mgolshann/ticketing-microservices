@@ -1,30 +1,32 @@
 import { useState } from 'react';
-import { API } from '../_app';
-
+import Router from 'next/router';
+import useRequest from '../../hooks/use-request';
 
 export default () => {
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [errors, setErrors] = useState(null);
+
+    const { doRequest, errors } = useRequest({
+        method: 'post',
+        url: '/api/users/signup',
+        body: {
+            email, 
+            password
+        },
+        onSuccess: () => Router.push('/')
+    });
+
 
     const onSubmit = async event => {
         event.preventDefault();
 
-        try {
-            await API.post('/api/users/signup', {
-                email, password
-            });
-        } catch (err) {
-            setErrors(err.response.data.errors)
-            // console.log(err.response.data.errors)
-        }
-
+        await doRequest();
     }
 
     return (
         <form onSubmit={onSubmit}>
-            
+            <div className="form-group">
             <h1>Sign Up</h1>
             
             <div className="form-group">
@@ -44,20 +46,8 @@ export default () => {
             </div>
 
             <button className="btn btn-primary">Sign Up</button>
-
-            {errors !== null && (
-                <div className="form-group">
-                    <div className="alert alert-danger">
-                    <label>Ooops ....</label>
-                    <ul>
-                        {errors.map(error => 
-                            <li>{error.message}</li>    
-                        )}
-                        </ul>
-                    </div>
-                </div>
-            )}
-
+            </div>
+            {errors}
         </form>
     )
 }
