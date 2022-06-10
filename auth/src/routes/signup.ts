@@ -55,8 +55,8 @@ validateRequest
         return res.status(400).send({ message: err })
     }   
     
-    // Sending successfull message to the front-end 
-    res.status(201).send({ message: 'User successfully added' });
+    // Sending user details to the front-end 
+    res.status(201).send(user);
 });
 
 export { router as SignupRouter };
