@@ -5,7 +5,6 @@ import { Request, Response, NextFunction } from "express";
 // 2- attach custom error message to the error
 // 3- handling multi errors for each scenario
 
-
 import { CustomError } from '../errors/custom-error';
 
 export const errorHandler = (

@@ -1,10 +1,24 @@
 import express from 'express';
 import 'express-async-errors';
 import { json } from 'body-parser';
-import cookieSession from 'cookie-session'
+var cookieSession = require('cookie-session')
 
 const cors = require('cors');
 require('dotenv').config();
+
+// Initiating express
+const app = express();
+
+// Trust incoming request form ingress controller
+app.set('trust proxy', true);
+
+app.use(json());
+app.use(
+    cors({
+      credentials: true,
+      origin: 'http://localhost:3001',
+    }),
+);
 
 // Error Classes
 import { NotFoundError } from './errors/not-found-error';
@@ -19,29 +33,19 @@ import { SignoutRouter } from './routes/signout';
 import { currentUserRouter } from './routes/current-user';
 import { testRouter } from './routes/test';
 
-// Initiating express
-const app = express();
-
-// Trust incoming request form ingress controller
-app.set('trust proxy', true);
-
-app.use(json());
-app.use(cors());
-
 // Configuration Cookie Session
 // secure: only share cookie with https connection
 // supertest not making https instead it use connection
 // so we tell run jest only when it's not in test mode
 app.use(
-    cookieSession({
-        keys: ['mgbg'],
-        //secure: process.env.NODE_ENV !== 'test', 
-        signed: true,
-        // Cookie Options
-        // maxAge: 24 * 60 * 60 * 1000 // 24 hours
-    })
+  cookieSession({
+    secret: 'yourSecret',
+    secure: false,
+    httpOnly: false,
+    sameSite: false,
+    maxAge: 24 * 60 * 60 * 1000 // 24 hours
+  }),
 );
-
 
 // User routes
 app.use(currentUserRouter);

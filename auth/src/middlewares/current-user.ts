@@ -1,7 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
-
 interface UserPayload {
     id: string;
     email: string;
@@ -11,13 +10,12 @@ interface UserPayload {
 declare global {
     namespace Express {
         interface Request {
-            currentUser?: UserPayload;
+            currentuser?: UserPayload;
         }
     }
 }
 
-
-export const currentUser = (
+export const currentuser = (
     req: Request, 
     res: Response, 
     next: NextFunction
@@ -33,7 +31,7 @@ export const currentUser = (
             process.env.JWT_TOKEN!
         ) as UserPayload;
         
-        req.currentUser = payload;
+        req.currentuser = payload;
 
     } catch (err) {}
 

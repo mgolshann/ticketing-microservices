@@ -36,12 +36,14 @@ validateRequest
     try {
         await user.save();
 
+        const payload = {
+            id: user.id,
+            email: user.email
+        };
+
         // Generate JWT
         const userJwtToken = jwt.sign(
-            {
-                id: user.id,
-                email: user.email
-            }, 
+            payload, 
             process.env.JWT_TOKEN!
         );
         
@@ -49,14 +51,16 @@ validateRequest
         req.session = {
             jwt: userJwtToken
         };
+        
+        // Sending user details to the front-end 
+        res.status(201).send(user);
 
     } catch (err) {
         console.log(err);
         return res.status(400).send({ message: err })
     }   
     
-    // Sending user details to the front-end 
-    res.status(201).send(user);
+
 });
 
 export { router as SignupRouter };

@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-
 import { app } from './app';
 
 // Connecting to mongodb 
@@ -25,6 +24,7 @@ const start = async () => {
         throw new Error('APP_PORT must be definded');
     }
 
+    
     try {
         await mongoose.connect(`mongodb://${process.env.MONGO_DB_URI}:${process.env.MONGO_DB_PORT}/${process.env.MONGO_DB_DATABASE}`, {
             useNewUrlParser: true,

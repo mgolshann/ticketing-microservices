@@ -6,14 +6,24 @@ export default ({ url, method, body, onSuccess }) => {
     const [errors, setErrors] = useState(null);
     
     const doRequest = async () => {
+
         try {
-            const response = await API[method](url, body);
+            
+            setErrors(null);
+
+            const response = await API[method](url, body, 
+                { 
+                    withCredentials: true,
+                    headers: {'Access-Control-Allow-Origin': '*', 'Content-Type': 'application/json'}
+                }
+            );
 
             if (onSuccess) {
-                onSuccess(response.data)
+                onSuccess(response.data);
             }
-
+            
             return response.data;
+
         } catch (err) {
 
             setErrors(
@@ -26,7 +36,7 @@ export default ({ url, method, body, onSuccess }) => {
                     </ul>
                 </div>
             );
-            
+
         }
     }
     
