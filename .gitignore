@@ -2,9 +2,17 @@
 /auth/dist
 /auth/.env
 
+
+/tickets/node_modules
+/tickets/dist
+/tickets/.env
+
+
 /client/node_modules
 /client/.next
 
 /temp
 skaffold.yaml
 !.gitignore
+
+/common
