@@ -1,4 +1,3 @@
-import { cookie } from 'express-validator';
 import { MongoMemoryServer } from 'mongodb-memory-server';
 const mongoose = require("mongoose");
 import request from 'supertest';
@@ -6,6 +5,7 @@ import { app } from '../app';
 
 
 declare global {
+    // We have promise here because of signup function that use async/await
     function signup(): Promise<string[]>
 }
 

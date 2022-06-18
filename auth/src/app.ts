@@ -21,17 +21,14 @@ app.use(
 );
 
 // Error Classes
-import { NotFoundError } from './errors/not-found-error';
-
-// Middlewares
-import { errorHandler } from './middlewares/error-handler';
+import { NotFoundError, errorHandler } from '@mgbg_tickets/common';
 
 // User routes
 import { SignupRouter } from './routes/signup';
 import { SigninRouter } from './routes/signin';
 import { SignoutRouter } from './routes/signout';
 import { currentUserRouter } from './routes/current-user';
-import { testRouter } from './routes/test';
+
 
 // Configuration Cookie Session
 // secure: only share cookie with https connection
@@ -52,7 +49,7 @@ app.use(currentUserRouter);
 app.use(SignupRouter);
 app.use(SigninRouter);
 app.use(SignoutRouter);
-app.use(testRouter);
+
 
 // Handling not found routes
 app.all('*', async (req, res) => {
